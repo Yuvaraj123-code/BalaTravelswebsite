@@ -15,8 +15,18 @@ import Guranty from './Assets/gurinete.png'
 import clean from './Assets/clean.png'
 import support from './Assets/service.png'
 import rate from './Assets/rate.png'
-
+import ServiceBg from './Assets/service1.png'
 import Fclogo from '../src/Assets/Untitled-1-removebg-preview.png'
+import OneWayIcon from './Assets/taxi-car-front-view-black-auto-icon-isolated-white-background_53562-15344.jpg';
+import RoundTripIcon from './Assets/service004.png';
+import AirportIcon from './Assets/service005.png';
+import RentalIcon from './Assets/service001.png';
+import CorporateIcon from './Assets/service006.png';
+import SightseeingIcon from './Assets/parking-valet-silhouette-icon-clipart-600nw-1366518944.webp';
+import sedan from './Assets/sedan.png'
+import { FaCheckCircle, FaStar } from 'react-icons/fa';
+import { MdNavigation, MdDownload } from 'react-icons/md';
+import { FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
 
 // Main App Component
 const App = () => {
@@ -83,10 +93,13 @@ const Header = ({ currentPage, navigateTo, isMobileMenuOpen, toggleMobileMenu })
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-       <div className="flex items-center cursor-pointer" onClick={() => navigateTo('home')}>
-  <img src={logo} alt="Bala Travels Logo" className="h-12 w-auto mr-3" />
+    <div className="flex items-center cursor-pointer" onClick={() => navigateTo('home')}>
+  <img 
+    src={logo} 
+    alt="Bala Travels Logo" 
+    className="h-12 w-28 object-contain mr-3" 
+  />
 </div>
-
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
@@ -156,6 +169,7 @@ const HomePage = () => {
       <MinimalAdventureCTA/> */}
       <DarkAdventureCTA />
       <TestimonialsSection/>
+      <WhyChooseUs/>
     </div>
   );
 };
@@ -495,6 +509,108 @@ const FeaturesSection = () => {
     </section>
   );
 };
+
+
+
+const WhyChooseUs = () => {
+  const benefits = [
+    {
+      icon: FaCheckCircle,
+      title: 'Verified Drivers',
+      description: 'All our drivers undergo background checks and training'
+    },
+    {
+      icon: MdNavigation,
+      title: 'Live Tracking',
+      description: 'Track your ride in real-time for complete transparency'
+    },
+    {
+      icon: FaCheckCircle,
+      title: 'Customer Support',
+      description: '24/7 dedicated support team to assist you anytime'
+    },
+    {
+      icon: FaStar,
+      title: 'Rated Service',
+      description: 'Rate your experience and help us improve our service'
+    }
+  ];
+
+  return (
+    <section className="py-16 md:py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Experience the Difference
+            </h2>
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              Join millions of satisfied customers who trust RideNow for their daily commute and travel needs. 
+              We're committed to providing safe, reliable, and comfortable rides every time.
+            </p>
+            
+            <div className="space-y-6">
+              {benefits.map((benefit, index) => {
+                const IconComponent = benefit.icon;
+                return (
+                  <div key={index} className="flex items-start space-x-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <IconComponent className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        {benefit.title}
+                      </h3>
+                      <p className="text-gray-600">
+                        {benefit.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            
+            <div className="mt-8">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors inline-flex items-center space-x-2">
+                <MdDownload className="w-5 h-5" />
+                <span>Download App</span>
+              </button>
+            </div>
+          </div>
+          
+          <div className="relative">
+  <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white shadow-lg">
+    <div className="flex flex-wrap justify-between gap-6 text-center">
+      {/* Stat Item */}
+      <div className="flex-1 min-w-[120px]">
+        <div className="text-3xl md:text-4xl font-bold mb-1">50K+</div>
+        <div className="text-blue-100 font-medium">Happy Riders</div>
+      </div>
+
+      <div className="flex-1 min-w-[120px]">
+        <div className="text-3xl md:text-4xl font-bold mb-1">5K+</div>
+        <div className="text-blue-100 font-medium">Verified Drivers</div>
+      </div>
+
+      <div className="flex-1 min-w-[120px]">
+        <div className="text-3xl md:text-4xl font-bold mb-1">15+</div>
+        <div className="text-blue-100 font-medium">Cities</div>
+      </div>
+
+      <div className="flex-1 min-w-[120px]">
+        <div className="text-3xl md:text-4xl font-bold mb-1">4.8★</div>
+        <div className="text-blue-100 font-medium">App Rating</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
 
 
 
@@ -925,55 +1041,56 @@ const DarkAdventureCTA = () => {
 const ServicesPage = () => {
   const services = [
     {
-      icon: '🛣️',
+      icon: OneWayIcon,
       title: 'Outstation One-Way',
       description: 'Travel to your destination with our reliable one-way cab service. Perfect for business trips or relocations.',
       features: ['No return fare', 'Flexible timing', 'All major cities covered'],
       buttonText: 'Book Now'
     },
     {
-      icon: '🔄',
+      icon: RoundTripIcon ,
       title: 'Round Trip',
       description: 'Complete round trip service with waiting time included. Ideal for business meetings and day trips.',
       features: ['Return journey included', 'Free waiting time', 'Driver allowance included'],
       buttonText: 'Book Now'
     },
     {
-      icon: '✈️',
+      icon: AirportIcon ,
       title: 'Airport Transfers',
       description: 'Hassle-free airport pickup and drop services. Never miss a flight with our punctual service.',
       features: ['Flight tracking', 'Meet & greet service', '24/7 availability'],
       buttonText: 'Book Now'
     },
     {
-      icon: '⏰',
+      icon: RentalIcon ,
       title: 'Hourly Rentals',
       description: 'Rent a cab by the hour for local sightseeing, shopping, or multiple stops within the city.',
       features: ['Minimum 4 hours', 'Multiple stops allowed', 'AC vehicles'],
       buttonText: 'Book Now'
     },
     {
-      icon: '👥',
+      icon: CorporateIcon ,
       title: 'Corporate Services',
       description: 'Dedicated corporate cab services for employee transportation and business meetings.',
       features: ['Corporate billing', 'Monthly packages', 'Professional drivers'],
-      buttonText: 'Contact Us'
+      buttonText: 'Book Now'
     },
     {
-      icon: '🗺️',
+      icon: SightseeingIcon ,
       title: 'Local Sightseeing',
       description: 'Explore local attractions with our guided sightseeing packages and experienced drivers.',
       features: ['Local guide available', 'Tourist packages', 'Customizable itinerary'],
-      buttonText: 'Explore'
+      buttonText: 'Book Now'
     }
   ];
 
   return (
     <div>
       <PageHeader
-        title="Our Services"
-        subtitle="Comprehensive cab services for all your travel needs"
-      />
+  title="Our Services"
+  subtitle="Comprehensive cab services for all your travel needs"
+  backgroundImage= {ServiceBg}
+/>
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -982,7 +1099,13 @@ const ServicesPage = () => {
                 key={index}
                 className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-blue-500"
               >
-                <div className="text-5xl mb-6 text-center">{service.icon}</div>
+                <div className="mb-6 text-center">
+  <img 
+    src={service.icon} 
+    alt={service.title} 
+    className="mx-auto w-16 h-16 object-contain"
+  />
+</div>
                 <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">
                   {service.title}
                 </h3>
@@ -1017,7 +1140,7 @@ const VehiclesPage = () => {
       model: 'Maruti Dzire / Honda Amaze',
       capacity: '4 Passengers',
       luggage: '2 Bags',
-      image: '🚗',
+      image: sedan,
       features: ['AC', 'Music System', 'GPS Tracking'],
       priceRange: '₹10-12/km'
     },
@@ -1070,25 +1193,39 @@ const VehiclesPage = () => {
 
   return (
     <div>
-      <PageHeader
-        title="Our Vehicle Fleet"
-        subtitle="Choose from our wide range of well-maintained vehicles"
-      />
-      <section className="py-20">
+     <div className="bg-white h-64 flex flex-col justify-center items-center">
+  <h1 className="text-4xl font-bold">Our Vehicle Fleet</h1>
+  <p className="text-lg text-center">Choose from our extensive fleet of well-maintained vehicles at Bala Travels.</p>
+</div>
+      <section className="py-8">
+        
         <div className="container mx-auto px-4">
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
             {vehicles.map((vehicle, index) => (
               <div
                 key={index}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
               >
-                <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-8 text-center">
-                  <div className="text-6xl mb-4">{vehicle.image}</div>
-                  <h3 className="text-2xl font-bold text-white mb-2">
-                    {vehicle.type}
-                  </h3>
-                  <p className="text-blue-100">{vehicle.model}</p>
-                </div>
+               <div 
+  className="relative rounded-xl overflow-hidden shadow-lg text-center p-8 h-64 flex flex-col justify-center"
+  style={{
+    backgroundImage: `url(${vehicle.image})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+>
+  <div className="absolute inset-0 bg-black bg-opacity-40"></div> {/* overlay for text readability */}
+
+  <div className="relative z-10">
+    <h3 className="text-2xl font-bold text-white mt-44">
+      {vehicle.type}
+    </h3>
+    <p className="text-gray-200">{vehicle.model}</p>
+  </div>
+</div>
+
                 <div className="p-6">
                   <div className="flex justify-between mb-4">
                     <div className="text-center">
@@ -1558,16 +1695,24 @@ const BlogPage = () => {
 };
 
 // Page Header Component
-const PageHeader = ({ title, subtitle }) => {
+const PageHeader = ({ title, subtitle, backgroundImage }) => {
   return (
-    <section className="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 text-white py-20 text-center">
-      <div className="container mx-auto px-4">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
-        <p className="text-xl opacity-90">{subtitle}</p>
+    <div
+      className="relative bg-cover bg-center text-white py-28 px-6"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/50"></div>
+
+      {/* Content */}
+      <div className="relative z-10 text-center">
+        <h1 className="text-4xl font-bold">{title}</h1>
+        <p className="mt-2 text-lg">{subtitle}</p>
       </div>
-    </section>
+    </div>
   );
 };
+
 
 // Footer Component
 const Footer = ({ navigateTo }) => {
@@ -1585,12 +1730,11 @@ const Footer = ({ navigateTo }) => {
 
                   <img src={logo} alt="Bala Travels" className="h-6" />
                 </div>
-                <div className="text-sm text-blue-400">Your Travel Partner</div>
+                <div className="text-lg font-bold mb-4">Your Travel Partner</div>
               </div>
             </div>
             <p className="text-gray-700 leading-relaxed">
-              Your trusted partner for safe and comfortable cab services across India. 
-              Book with confidence, travel with comfort.
+             Bala Travels is your trusted partner for safe, reliable, and comfortable cab and rental services in Rajapalayam and across India.
             </p>
           </div>
           
@@ -1600,7 +1744,7 @@ const Footer = ({ navigateTo }) => {
               <li>
                 <button 
                   onClick={() => navigateTo('services')}
-                  className="text-gray-700 hover:text-white transition-colors"
+                  className="text-gray-700 hover:text-blue-500 transition-colors"
                 >
                   Services
                 </button>
@@ -1608,7 +1752,7 @@ const Footer = ({ navigateTo }) => {
               <li>
                 <button 
                   onClick={() => navigateTo('vehicles')}
-                  className="text-gray-700 hover:text-white transition-colors"
+                  className="text-gray-700 hover:text-blue-500 transition-colors"
                 >
                   Vehicles
                 </button>
@@ -1616,7 +1760,7 @@ const Footer = ({ navigateTo }) => {
               <li>
                 <button 
                   onClick={() => navigateTo('about')}
-                  className="text-gray-700 hover:text-white transition-colors"
+                  className="text-gray-700 hover:text-blue-500 transition-colors"
                 >
                   About Us
                 </button>
@@ -1624,7 +1768,7 @@ const Footer = ({ navigateTo }) => {
               <li>
                 <button 
                   onClick={() => navigateTo('contact')}
-                  className="text-gray-700 hover:text-white transition-colors"
+                  className="text-gray-700 hover:text-blue-500 transition-colors"
                 >
                   Contact
                 </button>
@@ -1647,16 +1791,16 @@ const Footer = ({ navigateTo }) => {
             <h3 className="text-lg font-bold mb-4">Contact Info</h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
-                <span>📞</span>
+                <FaPhoneAlt className="text-blue-600 w-5 h-5" />
                 <span className="text-gray-700">+91 98765 43210</span>
               </div>
               <div className="flex items-center space-x-3">
-                <span>✉️</span>
+                <FaEnvelope className="text-blue-600 w-5 h-5" />
                 <span className="text-gray-700">info@balatravels.com</span>
               </div>
               <div className="flex items-center space-x-3">
-                <span>📍</span>
-                <span className="text-gray-700">Mumbai, Maharashtra</span>
+                 <FaMapMarkerAlt className="text-blue-600 w-5 h-5" />
+                <span className="text-gray-700">Rajapalayam, Tamil Nadu</span>
               </div>
             </div>
           </div>
