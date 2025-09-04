@@ -27,6 +27,15 @@ import sedan from './Assets/sedan.png'
 import { FaCheckCircle, FaStar } from 'react-icons/fa';
 import { MdNavigation, MdDownload } from 'react-icons/md';
 import { FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
+import localImg from './Assets/cityride.jpg';
+import outstationImg from './Assets/longride.jpeg';
+import airportImg from './Assets/airport.jpg';
+import rentalImg from './Assets/dayrental.png';
+import Ertiga01 from './Assets/ertiga.png';
+import Ertiga from './Assets/ertiga1.png';
+import Maruti from './Assets/Maruti.webp'
+import Maruti1 from './Assets/maruti-suzuki-dzire-500x500.webp'
+import Maruti2 from './Assets/New-Suzuki-Dzire.jpg'
 
 // Main App Component
 const App = () => {
@@ -511,7 +520,6 @@ const FeaturesSection = () => {
 };
 
 
-
 const WhyChooseUs = () => {
   const benefits = [
     {
@@ -539,71 +547,68 @@ const WhyChooseUs = () => {
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Experience the Difference
-            </h2>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Join millions of satisfied customers who trust RideNow for their daily commute and travel needs. 
-              We're committed to providing safe, reliable, and comfortable rides every time.
-            </p>
-            
-            <div className="space-y-6">
-              {benefits.map((benefit, index) => {
-                const IconComponent = benefit.icon;
-                return (
-                  <div key={index} className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <IconComponent className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        {benefit.title}
-                      </h3>
-                      <p className="text-gray-600">
-                        {benefit.description}
-                      </p>
-                    </div>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Experience the Difference
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Join millions of satisfied customers who trust Bala Travels for safe, reliable, and comfortable rides across Rajapalayam.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          {/* Left: Benefits */}
+          <div className="space-y-6">
+            {benefits.map((benefit, index) => {
+              const IconComponent = benefit.icon;
+              return (
+                <div key={index} className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <IconComponent className="w-6 h-6 text-blue-600" />
                   </div>
-                );
-              })}
-            </div>
-            
-            <div className="mt-8">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                      {benefit.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm md:text-base">
+                      {benefit.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+
+            <div className="mt-8 flex justify-center lg:justify-start">
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors inline-flex items-center space-x-2">
                 <MdDownload className="w-5 h-5" />
                 <span>Download App</span>
               </button>
             </div>
           </div>
-          
-          <div className="relative">
-  <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white shadow-lg">
-    <div className="flex flex-wrap justify-between gap-6 text-center">
-      {/* Stat Item */}
-      <div className="flex-1 min-w-[120px]">
-        <div className="text-3xl md:text-4xl font-bold mb-1">50K+</div>
-        <div className="text-blue-100 font-medium">Happy Riders</div>
-      </div>
 
-      <div className="flex-1 min-w-[120px]">
-        <div className="text-3xl md:text-4xl font-bold mb-1">5K+</div>
-        <div className="text-blue-100 font-medium">Verified Drivers</div>
-      </div>
-
-      <div className="flex-1 min-w-[120px]">
-        <div className="text-3xl md:text-4xl font-bold mb-1">15+</div>
-        <div className="text-blue-100 font-medium">Cities</div>
-      </div>
-
-      <div className="flex-1 min-w-[120px]">
-        <div className="text-3xl md:text-4xl font-bold mb-1">4.8★</div>
-        <div className="text-blue-100 font-medium">App Rating</div>
-      </div>
-    </div>
-  </div>
-</div>
+          {/* Right: Stats Card */}
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white shadow-lg w-full max-w-md">
+              <div className="grid grid-cols-2 gap-6 text-center">
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold mb-1">50K+</div>
+                  <div className="text-blue-100 font-medium">Happy Riders</div>
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold mb-1">5K+</div>
+                  <div className="text-blue-100 font-medium">Verified Drivers</div>
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold mb-1">15+</div>
+                  <div className="text-blue-100 font-medium">Cities</div>
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold mb-1">4.8★</div>
+                  <div className="text-blue-100 font-medium">App Rating</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
         </div>
       </div>
@@ -611,38 +616,35 @@ const WhyChooseUs = () => {
   );
 };
 
-
-
-
 const TestimonialsSection = () => {
   const testimonials = [
     {
       name: 'Rajesh Kumar',
-      location: 'Chennai',
+      location: 'Rajapalayam',
       rating: 5,
       comment: 'Excellent service! Clean cars, punctual drivers, and very reasonable rates. Highly recommended for airport transfers.',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face'
+      image: 'https://media.istockphoto.com/id/1333001232/photo/portrait-of-indian-man-face-outdoors-looking-at-camera.jpg?s=612x612&w=0&k=20&c=Ne-OChwAEFF5U7yxOwUUqA8ELrJ1WCYho4RkW9v360I='
     },
     {
-      name: 'Priya Sharma',
-      location: 'Mumbai',
+      name: 'Priya',
+      location: 'Tenkasi',
       rating: 5,
       comment: 'Used Bala Travels for my family trip. The driver was courteous and the vehicle was spotless. Will definitely book again!',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face'
+      image: 'https://momtomam.in/wp-content/uploads/2024/09/Ritu.jpg'
     },
     {
-      name: 'Arjun Reddy',
-      location: 'Hyderabad',
+      name: 'Arjun',
+      location: 'Virudhunagar',
       rating: 4,
       comment: 'Great experience with outstation travel. Good pricing and reliable service. The GPS tracking feature gives peace of mind.',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG-fo-uKE7Pkn6HuFsDz8xyZkWu6p-xCkgPA&s'
     },
     {
       name: 'Meera Nair',
-      location: 'Bangalore',
+      location: 'Madurai',
       rating: 5,
       comment: 'Professional service with 24/7 support. Booked last minute for an emergency and they arranged everything quickly.',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face'
+      image: 'https://img.freepik.com/premium-photo/young-indian-woman-happy-restaurant_81396-153.jpg'
     }
   ];
 
@@ -719,7 +721,7 @@ const BestPricesSection = () => {
         'Flexible Timing'
       ],
       popular: false,
-      icon: '🏙️'
+      image: localImg
     },
     {
       type: 'Outstation',
@@ -734,7 +736,7 @@ const BestPricesSection = () => {
         'Multiple Payment Options'
       ],
       popular: true,
-      icon: '🛣️'
+      image: outstationImg 
     },
     {
       type: 'Airport',
@@ -749,7 +751,7 @@ const BestPricesSection = () => {
         'Professional Drivers'
       ],
       popular: false,
-      icon: '✈️'
+      image: airportImg 
     },
     {
       type: 'Rental',
@@ -764,7 +766,7 @@ const BestPricesSection = () => {
         'Extra KM: ₹12/km'
       ],
       popular: false,
-      icon: '📅'
+      image: rentalImg 
     }
   ];
 
@@ -795,7 +797,14 @@ const BestPricesSection = () => {
               )}
               
               <div className="text-center mb-6">
-                <div className="text-4xl mb-2">{plan.icon}</div>
+                <div className="mb-4 flex justify-center">
+<img
+  src={plan.image}
+  alt={plan.title}
+  className="h-42 w-42 md:h-46 md:w-46 lg:h-50 lg:w-50 object-contain mx-auto mb-4"
+/>
+
+</div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">{plan.title}</h3>
                 <div className="mb-4">
                   <span className="text-3xl font-bold text-blue-600">{plan.price}</span>
@@ -1145,49 +1154,49 @@ const VehiclesPage = () => {
       priceRange: '₹10-12/km'
     },
     {
-      type: 'SUV',
-      model: 'Mahindra Scorpio / Tata Safari',
+      type: 'Ertiga',
+      model: ' Ertiga / Maruti Ertiga',
       capacity: '6-7 Passengers',
       luggage: '4 Bags',
-      image: '🚙',
+      image: Ertiga01,
       features: ['AC', 'Music System', 'GPS Tracking', 'Extra Space'],
       priceRange: '₹14-16/km'
     },
     {
-      type: 'Hatchback',
-      model: 'Maruti Swift / Hyundai i20',
-      capacity: '4 Passengers',
-      luggage: '2 Bags',
-      image: '🚘',
+      type: 'Ertiga',
+      model: 'Ertiga/ Maruti Ertiga',
+      capacity: '6 -7 Passengers',
+      luggage: '4 Bags',
+      image: Ertiga,
       features: ['AC', 'Music System', 'Fuel Efficient'],
-      priceRange: '₹8-10/km'
+      priceRange: '₹10-14/km'
     },
     {
-      type: 'Luxury',
-      model: 'Toyota Camry / Honda Accord',
+      type: 'Maruti Suzuki',
+      model: 'Maruti Suzuki Dzire / Dzire',
       capacity: '4 Passengers',
       luggage: '3 Bags',
-      image: '🏎️',
+      image: Maruti,
       features: ['Premium AC', 'Leather Seats', 'Premium Sound', 'WiFi'],
-      priceRange: '₹20-25/km'
+      priceRange: '₹10-25/km'
     },
     {
-      type: 'Tempo Traveller',
-      model: 'Force Traveller / Mahindra Bolero',
-      capacity: '12-17 Passengers',
-      luggage: '10 Bags',
-      image: '🚐',
+      type: 'Maruti Suzuki',
+      model: 'Maruti Suzuki Dzire / Dzire',
+      capacity: '4 Passengers',
+      luggage: '3 Bags',
+      image: Maruti1,
       features: ['AC', 'Push Back Seats', 'Music System', 'Group Travel'],
-      priceRange: '₹18-22/km'
+      priceRange: '₹11-12/km'
     },
     {
-      type: 'Mini Bus',
-      model: 'Tata Winger / Ashok Leyland',
-      capacity: '20-35 Passengers',
-      luggage: '20 Bags',
-      image: '🚌',
+      type: 'Maruti Suzuki',
+      model: 'Maruti Suzuki Dzire / Dzire',
+      capacity: '4 Passengers',
+      luggage: '3 Bags',
+      image: Maruti2,
       features: ['AC', 'Comfortable Seats', 'Large Group', 'Entertainment'],
-      priceRange: '₹25-30/km'
+      priceRange: '₹11-12/km'
     }
   ];
 
