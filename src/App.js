@@ -235,7 +235,7 @@ const HeroSection = () => {
   }, [activeTab]);
 
   return (
-    <section className="relative min-h-screen flex items-center bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 overflow-hidden">
+    <section className="relative min-h-screen flex items-center  overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-20 w-32 h-32 bg-white rounded-full"></div>
