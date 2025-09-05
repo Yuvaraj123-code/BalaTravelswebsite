@@ -36,6 +36,8 @@ import Ertiga from './Assets/ertiga1.png';
 import Maruti from './Assets/Maruti.webp'
 import Maruti1 from './Assets/maruti-suzuki-dzire-500x500.webp'
 import Maruti2 from './Assets/New-Suzuki-Dzire.jpg'
+import AboutHeroBg from '../src/Assets/About.png'
+import ContactHeaderBg from './Assets/Bala Travels (1).png';
 
 // Main App Component
 const App = () => {
@@ -69,6 +71,12 @@ const App = () => {
         return <HomePage />;
     }
   };
+
+
+
+
+
+// PageHeader component (if you don't already have one)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -1054,73 +1062,135 @@ const ServicesPage = () => {
       title: 'Outstation One-Way',
       description: 'Travel to your destination with our reliable one-way cab service. Perfect for business trips or relocations.',
       features: ['No return fare', 'Flexible timing', 'All major cities covered'],
-      buttonText: 'Book Now'
+      buttonText: 'Book Now',
+      popular: false,
+      price: 'Starting at ₹12/km'
     },
     {
-      icon: RoundTripIcon ,
+      icon: RoundTripIcon,
       title: 'Round Trip',
       description: 'Complete round trip service with waiting time included. Ideal for business meetings and day trips.',
       features: ['Return journey included', 'Free waiting time', 'Driver allowance included'],
-      buttonText: 'Book Now'
+      buttonText: 'Book Now',
+      popular: true, // Marked as popular
+      price: 'Starting at ₹10/km'
     },
     {
-      icon: AirportIcon ,
+      icon: AirportIcon,
       title: 'Airport Transfers',
       description: 'Hassle-free airport pickup and drop services. Never miss a flight with our punctual service.',
       features: ['Flight tracking', 'Meet & greet service', '24/7 availability'],
-      buttonText: 'Book Now'
+      buttonText: 'Book Now',
+      popular: false,
+      price: 'Flat rates available'
     },
     {
-      icon: RentalIcon ,
+      icon: RentalIcon,
       title: 'Hourly Rentals',
       description: 'Rent a cab by the hour for local sightseeing, shopping, or multiple stops within the city.',
       features: ['Minimum 4 hours', 'Multiple stops allowed', 'AC vehicles'],
-      buttonText: 'Book Now'
+      buttonText: 'Book Now',
+      popular: false,
+      price: '₹150/hour onwards'
     },
     {
-      icon: CorporateIcon ,
+      icon: CorporateIcon,
       title: 'Corporate Services',
       description: 'Dedicated corporate cab services for employee transportation and business meetings.',
       features: ['Corporate billing', 'Monthly packages', 'Professional drivers'],
-      buttonText: 'Book Now'
+      buttonText: 'Contact Sales',
+      popular: false,
+      price: 'Custom packages'
     },
     {
-      icon: SightseeingIcon ,
+      icon: SightseeingIcon,
       title: 'Local Sightseeing',
       description: 'Explore local attractions with our guided sightseeing packages and experienced drivers.',
       features: ['Local guide available', 'Tourist packages', 'Customizable itinerary'],
-      buttonText: 'Book Now'
+      buttonText: 'Book Now',
+      popular: true, // Marked as popular
+      price: 'Packages from ₹999'
     }
   ];
 
+  // State for filtering services
+  const [filter, setFilter] = useState('all');
+  const filteredServices = filter === 'all' 
+    ? services 
+    : services.filter(service => filter === 'popular' ? service.popular : true);
+
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       <PageHeader
-  title="Our Services"
-  subtitle="Comprehensive cab services for all your travel needs"
-  backgroundImage= {ServiceBg}
-/>
+        title="Our Services"
+        subtitle="Comprehensive cab services for all your travel needs"
+        backgroundImage={ServiceBg}
+      />
+      
+      {/* Additional Services Header with Filter */}
+      <section className="py-8 bg-white shadow-sm">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0 text-center md:text-left">
+              Choose Your Ride
+            </h2>
+            <div className="flex space-x-2">
+              <button 
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                onClick={() => setFilter('all')}
+              >
+                All Services
+              </button>
+              <button 
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${filter === 'popular' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                onClick={() => setFilter('popular')}
+              >
+                Most Popular
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Services Grid */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
+            {filteredServices.map((service, index) => (
               <div
                 key={index}
-                className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-blue-500"
+                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-blue-500 relative"
               >
+                {/* Popular Badge */}
+                {service.popular && (
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                      MOST POPULAR
+                    </span>
+                  </div>
+                )}
+                
                 <div className="mb-6 text-center">
-  <img 
-    src={service.icon} 
-    alt={service.title} 
-    className="mx-auto w-16 h-16 object-contain"
-  />
-</div>
+                  <img 
+                    src={service.icon} 
+                    alt={service.title} 
+                    className="mx-auto w-16 h-16 object-contain"
+                  />
+                </div>
+                
                 <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
+                
+                <p className="text-gray-600 mb-6 leading-relaxed text-center">
                   {service.description}
                 </p>
+                
+                {/* Pricing */}
+                <div className="text-center mb-4">
+                  <span className="text-blue-600 font-semibold">{service.price}</span>
+                </div>
+                
                 <ul className="space-y-2 mb-6">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center text-gray-600">
@@ -1129,11 +1199,50 @@ const ServicesPage = () => {
                     </li>
                   ))}
                 </ul>
+                
                 <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
                   {service.buttonText}
                 </button>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Additional CTA Section */}
+      <section className="py-16 bg-blue-500 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">Need a Custom Solution?</h2>
+          <p className="text-xl mb-8 max-w-3xl mx-auto">
+            We offer tailored transportation packages for special events, weddings, and corporate needs.
+          </p>
+          <button className="bg-white text-blue-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
+            Contact Our Team
+          </button>
+        </div>
+      </section>
+      
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Frequently Asked Questions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="bg-white p-6 rounded-lg shadow">
+              <h3 className="text-xl font-semibold mb-3">How far in advance should I book?</h3>
+              <p className="text-gray-600">We recommend booking at least 2-3 hours in advance for city rides and 24 hours for outstation trips.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow">
+              <h3 className="text-xl font-semibold mb-3">What payment methods do you accept?</h3>
+              <p className="text-gray-600">We accept cash, UPI, credit/debit cards, and digital wallets for your convenience.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow">
+              <h3 className="text-xl font-semibold mb-3">Can I cancel my booking?</h3>
+              <p className="text-gray-600">Yes, cancellations are free up to 30 minutes before pickup for city rides and 2 hours for airport transfers.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow">
+              <h3 className="text-xl font-semibold mb-3">Do you provide child seats?</h3>
+              <p className="text-gray-600">Child seats are available on request for an additional charge. Please mention this during booking.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1283,118 +1392,268 @@ const VehiclesPage = () => {
 // About Page Component
 const AboutPage = () => {
   return (
-    <div>
-      <PageHeader
-        title="About Bala Travels"
-        subtitle="Your trusted travel companion since 2010"
-      />
-      <section className="py-20">
+    <div className="min-h-screen">
+      {/* Hero Section */}
+     <div className="relative text-white py-24 md:py-32 lg:py-40 overflow-hidden">
+  {/* Background Image with Overlay */}
+  <div className="absolute inset-0">
+    <img 
+      src={AboutHeroBg} 
+      alt="Bala Travels Background" 
+      className="w-full h-full object-cover"
+    />
+    <div className="absolute inset-0 bg-blue-900 opacity-70"></div>
+  </div>
+  
+  {/* Optional decorative elements */}
+  <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-black to-transparent opacity-20"></div>
+  <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent opacity-20"></div>
+  
+  <div className="container mx-auto px-4 relative z-10-mt-8">
+    <div className="max-w-3xl mx-auto text-center">
+      <div className="mb-4">
+        <div className="inline-block bg-yellow-400 bg-opacity-20 px-4 py-2 rounded-full mb-4">
+          <span className="text-yellow-300 text-sm font-semibold">TRUSTED SINCE 2010</span>
+        </div>
+      </div>
+      
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+        About <span className="text-yellow-400">Bala Travels</span>
+      </h1>
+      
+      <p className="text-xl md:text-2xl text-blue-100 mb-8 font-light">
+        Your trusted travel companion for over a decade
+      </p>
+      
+      <div className="w-24 h-1 bg-yellow-400 mx-auto mb-8"></div>
+      
+      <p className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
+For over a decade, Bala Travels has been more than just a travel service—we’ve been a trusted companion on countless journeys. With a strong commitment to reliability, comfort, and exceptional service, we’ve built lasting relationships with our customers, making every trip safe, seamless, and memorable. Our dedication to excellence is the reason travelers continue to choose us, year after year.      </p>
+      
+      {/* Call to Action Buttons */}
+      <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+        <button className="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105">
+          Book Your Ride
+        </button>
+        <button className="border-2 border-white hover:bg-white hover:text-blue-900 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200">
+          Contact Us
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+      {/* Our Story Section */}
+      <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-              <div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                  Our Story
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-4">
-                  Founded in 2010, Bala Travels has been serving customers with reliable and comfortable cab services across India. What started as a small family business has grown into one of the most trusted names in the transportation industry.
-                </p>
-                <p className="text-gray-600 leading-relaxed mb-4">
-                  We pride ourselves on our commitment to safety, punctuality, and customer satisfaction. Our team of experienced drivers and well-maintained fleet ensures that every journey with us is smooth and memorable.
-                </p>
-                <p className="text-gray-600 leading-relaxed">
-                  Today, we serve thousands of customers annually, providing services ranging from airport transfers to outstation trips, corporate transportation, and local sightseeing tours.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white">
-                  <div className="text-6xl mb-4">🚗</div>
-                  <h3 className="text-2xl font-bold mb-2">15+ Years</h3>
-                  <p>of Excellence in Service</p>
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="lg:w-1/2">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                  src="https://api.formulaindia.com/upload/media//89b1bfa11e7602fa0fb07ddd09c773c9.jpg" 
+                  alt="Bala Travels Fleet" 
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute -bottom-6 -right-6 bg-yellow-400 text-blue-900 p-6 rounded-2xl shadow-lg">
+                  <div className="text-3xl font-bold">15+</div>
+                  <div className="text-sm font-semibold">Years Experience</div>
                 </div>
               </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <div className="text-center">
-                <div className="bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">🎯</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">Our Mission</h3>
-                <p className="text-gray-600">
-                  To provide safe, reliable, and affordable transportation services that exceed customer expectations.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="bg-green-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">👁️</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">Our Vision</h3>
-                <p className="text-gray-600">
-                  To be the leading cab service provider in India, known for innovation and customer-centric approach.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="bg-purple-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">💎</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">Our Values</h3>
-                <p className="text-gray-600">
-                  Safety first, customer satisfaction, transparency, and continuous improvement in all we do.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-gray-50 rounded-2xl p-8">
-              <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-                Why Choose Us?
+            
+            <div className="lg:w-1/2">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+                Our <span className="text-blue-600">Journey</span>
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
-                    ✓
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">Verified Drivers</h4>
-                    <p className="text-gray-600 text-sm">All our drivers are background verified and trained professionals</p>
-                  </div>
+              <p className="text-gray-600 text-lg mb-6">
+                Founded in 2010, Bala Travels began as a small family business with just three vehicles. Today, we've grown into one of the most trusted transportation services in India, with a fleet of over 200 vehicles serving 25+ cities.
+              </p>
+              <p className="text-gray-600 text-lg mb-6">
+                Our growth has been driven by an unwavering commitment to safety, punctuality, and customer satisfaction. We've built our reputation one ride at a time, ensuring that every journey with us is comfortable, reliable, and memorable.
+              </p>
+              <p className="text-gray-600 text-lg mb-8">
+                As we continue to expand, we remain true to our core values while embracing innovation to serve our customers better.
+              </p>
+              
+              <div className="flex flex-wrap gap-4">
+                <div className="bg-blue-50 rounded-lg px-4 py-2">
+                  <div className="text-blue-600 font-bold">50,000+</div>
+                  <div className="text-sm text-gray-600">Happy Customers</div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
-                    ✓
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">GPS Tracking</h4>
-                    <p className="text-gray-600 text-sm">Real-time tracking for safety and peace of mind</p>
-                  </div>
+                <div className="bg-blue-50 rounded-lg px-4 py-2">
+                  <div className="text-blue-600 font-bold">200+</div>
+                  <div className="text-sm text-gray-600">Vehicles</div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
-                    ✓
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">24/7 Support</h4>
-                    <p className="text-gray-600 text-sm">Round-the-clock customer support for any assistance</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
-                    ✓
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">Transparent Pricing</h4>
-                    <p className="text-gray-600 text-sm">No hidden charges, clear and upfront pricing</p>
-                  </div>
+                <div className="bg-blue-50 rounded-lg px-4 py-2">
+                  <div className="text-blue-600 font-bold">25+</div>
+                  <div className="text-sm text-gray-600">Cities</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Mission & Vision Section */}
+      <section className="py-16 md:py-24 bg-blue-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Core Philosophy</h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p className="text-gray-600 text-lg">
+              Guided by our mission and vision, we strive to deliver exceptional transportation services that exceed expectations.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center transition-transform duration-300 hover:-translate-y-2">
+              <div className="bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Our Mission</h3>
+              <p className="text-gray-600">
+                To provide safe, reliable, and affordable transportation services that exceed customer expectations through innovation and exceptional service.
+              </p>
+            </div>
+            
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center transition-transform duration-300 hover:-translate-y-2">
+              <div className="bg-green-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Our Vision</h3>
+              <p className="text-gray-600">
+                To be India's most trusted transportation service provider, known for innovation, reliability, and customer-centric approach.
+              </p>
+            </div>
+            
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center transition-transform duration-300 hover:-translate-y-2">
+              <div className="bg-purple-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Our Values</h3>
+              <p className="text-gray-600">
+                Safety first, customer satisfaction, transparency, innovation, and continuous improvement in all we do.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Why Choose Bala Travels?</h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p className="text-gray-600 text-lg">
+              We go the extra mile to ensure your journey is safe, comfortable, and hassle-free.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="flex items-start space-x-6 p-6 bg-blue-50 rounded-2xl">
+              <div className="bg-blue-600 text-white rounded-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800 mb-2">Verified Drivers</h4>
+                <p className="text-gray-600">All our drivers undergo rigorous background checks and regular training to ensure your safety.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-6 p-6 bg-blue-50 rounded-2xl">
+              <div className="bg-blue-600 text-white rounded-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800 mb-2">Punctuality Guaranteed</h4>
+                <p className="text-gray-600">We understand the value of your time. Our on-time performance record is consistently above 98%.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-6 p-6 bg-blue-50 rounded-2xl">
+              <div className="bg-blue-600 text-white rounded-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800 mb-2">Real-time GPS Tracking</h4>
+                <p className="text-gray-600">Track your ride in real-time, share your journey with loved ones, and enjoy complete peace of mind.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-6 p-6 bg-blue-50 rounded-2xl">
+              <div className="bg-blue-600 text-white rounded-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800 mb-2">24/7 Customer Support</h4>
+                <p className="text-gray-600">Our dedicated support team is available round the clock to assist you with any queries or concerns.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-6 p-6 bg-blue-50 rounded-2xl">
+              <div className="bg-blue-600 text-white rounded-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800 mb-2">Transparent Pricing</h4>
+                <p className="text-gray-600">No hidden charges or surprise fees. Our pricing is clear, competitive, and upfront.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-6 p-6 bg-blue-50 rounded-2xl">
+              <div className="bg-blue-600 text-white rounded-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800 mb-2">Well-Maintained Fleet</h4>
+                <p className="text-gray-600">Our vehicles undergo regular maintenance and cleanliness checks to ensure your comfort and safety.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Experience the Bala Travels Difference</h2>
+          <p className="text-xl text-blue-100 mb-10 max-w-3xl mx-auto">
+            Join thousands of satisfied customers who trust us for their transportation needs.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <button className="bg-white text-blue-600 font-bold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors shadow-lg">
+              Book Your Ride Now
+            </button>
+            <button className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-blue-600 transition-colors">
+              Contact Us
+            </button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
-
 // Contact Page Component
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -1426,26 +1685,45 @@ const ContactPage = () => {
   };
 
   return (
-    <div>
-      <PageHeader
-        title="Contact Us"
-        subtitle="Get in touch with us for any queries or bookings"
-      />
-      <section className="py-20">
+    <div className="min-h-screen">
+    
+
+<div className="text-center py-12 bg-blue-50">
+    <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+      Contact Us
+    </h1>
+    <h4 className="text-lg md:text-xl text-gray-600">
+      Get in touch with us for any queries or bookings
+    </h4>
+  </div>
+      
+      <section className="py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+         
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
             {/* Contact Information */}
-            <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-8">
-                Get In Touch
-              </h2>
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 relative pb-3 after:absolute after:left-0 after:bottom-0 after:h-1 after:w-16 after:bg-blue-600">
+                  Get In Touch
+                </h2>
+                <p className="text-gray-600 mb-8">
+                  Reach out to us through any of the following channels. Our customer support team 
+                  is available 24/7 to assist you with your travel requirements.
+                </p>
+              </div>
+              
               <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
-                    📍
+                <div className="flex items-start space-x-4 p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="bg-blue-100 text-blue-600 rounded-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800">Address</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Address</h3>
                     <p className="text-gray-600">
                       123 Travel Street,<br />
                       Mumbai, Maharashtra 400001<br />
@@ -1453,44 +1731,84 @@ const ContactPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-green-500 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
-                    📞
+                
+                <div className="flex items-start space-x-4 p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="bg-green-100 text-green-600 rounded-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800">Phone</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Phone</h3>
                     <p className="text-gray-600">+91 98765 43210</p>
                     <p className="text-gray-600">+91 87654 32109</p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
-                    ✉️
+                
+                <div className="flex items-start space-x-4 p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="bg-purple-100 text-purple-600 rounded-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800">Email</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Email</h3>
                     <p className="text-gray-600">info@balatravels.com</p>
                     <p className="text-gray-600">support@balatravels.com</p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-orange-500 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
-                    ⏰
+                
+                <div className="flex items-start space-x-4 p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="bg-orange-100 text-orange-600 rounded-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800">Working Hours</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Working Hours</h3>
                     <p className="text-gray-600">24/7 Service Available</p>
                     <p className="text-gray-600">Office: 9 AM - 9 PM</p>
                   </div>
                 </div>
               </div>
+              
+              {/* Social Media Links */}
+              <div className="pt-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">Follow Us</h3>
+                <div className="flex space-x-4">
+                  <a href="#" className="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                  <a href="#" className="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                    </svg>
+                  </a>
+                  <a href="#" className="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                  <a href="#" className="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path fillRule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
                 Send us a Message
               </h2>
+              <p className="text-gray-600 mb-6">
+                Fill out the form below and we'll get back to you as soon as possible.
+              </p>
+              
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -1501,7 +1819,7 @@ const ContactPage = () => {
                       type="text"
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your full name"
                       required
                     />
@@ -1514,12 +1832,13 @@ const ContactPage = () => {
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your phone number"
                       required
                     />
                   </div>
                 </div>
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Email Address *
@@ -1528,23 +1847,30 @@ const ContactPage = () => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="Enter your email address"
                     required
                   />
                 </div>
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Subject
                   </label>
-                  <input
-                    type="text"
+                  <select
                     value={formData.subject}
                     onChange={(e) => handleInputChange('subject', e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                    placeholder="Enter subject"
-                  />
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  >
+                    <option value="">Select a subject</option>
+                    <option value="booking">Booking Inquiry</option>
+                    <option value="complaint">Complaint</option>
+                    <option value="suggestion">Suggestion</option>
+                    <option value="partnership">Partnership</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Message *
@@ -1553,26 +1879,67 @@ const ContactPage = () => {
                     value={formData.message}
                     onChange={(e) => handleInputChange('message', e.target.value)}
                     rows={5}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
                     placeholder="Enter your message"
                     required
                   ></textarea>
                 </div>
+                
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105"
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] shadow-md"
                 >
                   Send Message
                 </button>
               </form>
             </div>
           </div>
+
+
+           <div className="text-center max-w-3xl mx-auto mb-8 mt-9" >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">We'd Love to Hear From You</h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p className="text-gray-600 text-lg">
+              Have questions about our services or need assistance with a booking? 
+              Our team is here to help you with all your travel needs.
+            </p>
+          </div>
         </div>
       </section>
+      
+      {/* Map Section */}
+      <div className="container mx-auto px-4 pb-16 max-w-6xl">
+  <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+    {/* Responsive Google Map */}
+    <div className="h-64 md:h-96">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125938.0318003126!2d77.55641765!3d9.459618700000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06e9d3a85aca8f%3A0x552789e33f3b0b11!2sRajapalayam%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1757097151708!5m2!1sen!2sin"
+        width="100%"
+        height="100%"
+        allowFullScreen=""
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        className="w-full h-full border-0"
+      ></iframe>
+    </div>
+
+    {/* Button Section */}
+    <div className="p-6 text-center bg-gray-50">
+      <a
+        href="https://maps.google.com/?q=Bala+Travels+Mumbai"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+      >
+        View Larger Map
+      </a>
+    </div>
+  </div>
+</div>
+
     </div>
   );
 };
-
 // Blog Page Component
 const BlogPage = () => {
   const blogPosts = [
@@ -1706,17 +2073,29 @@ const BlogPage = () => {
 // Page Header Component
 const PageHeader = ({ title, subtitle, backgroundImage }) => {
   return (
-    <div
-      className="relative bg-cover bg-center text-white py-28 px-6"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/50"></div>
-
-      {/* Content */}
-      <div className="relative z-10 text-center">
-        <h1 className="text-4xl font-bold">{title}</h1>
-        <p className="mt-2 text-lg">{subtitle}</p>
+    <div className="relative py-16 md:py-24 lg:py-28 overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0">
+        <img 
+          src={backgroundImage} 
+          alt={title} 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-blue-800 opacity-70"></div>
+      </div>
+      
+      {/* Decorative gradients */}
+      <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-black to-transparent opacity-40"></div>
+      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent opacity-40"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-yellow-300 mb-0">{title}</h1>
+          <div className="w-24 h-1 bg-yellow-400 mx-auto mb-6"></div>
+          <p className="text-xl text-blue-100 md:text-2xl max-w-2xl mx-auto">
+            {subtitle}
+          </p>
+        </div>
       </div>
     </div>
   );
