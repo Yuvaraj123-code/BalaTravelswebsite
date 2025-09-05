@@ -38,6 +38,13 @@ import Maruti1 from './Assets/maruti-suzuki-dzire-500x500.webp'
 import Maruti2 from './Assets/New-Suzuki-Dzire.jpg'
 import AboutHeroBg from '../src/Assets/About.png'
 import ContactHeaderBg from './Assets/Bala Travels (1).png';
+import Rainy from './Assets/rainy.jpg'
+import Kerala from './Assets/monsoon-kerala.jpg'
+import CabBokking from './Assets/cabbooking.png'
+import Topspot from './Assets/kerala.jpg'
+import corporative from './Assets/corperative.jpg'
+import Airport from './Assets/Airport.png'
+import Rajapalyam from './Assets/rajapalayam.png'
 
 // Main App Component
 const App = () => {
@@ -1947,7 +1954,7 @@ const BlogPage = () => {
       id: 1,
       title: 'Top 10 Travel Destinations in India',
       excerpt: 'Discover the most beautiful and culturally rich destinations across India that you must visit.',
-      image: '🏛️',
+      image: Topspot,
       date: 'March 15, 2025',
       readTime: '5 min read',
       category: 'Travel Guide'
@@ -1956,7 +1963,7 @@ const BlogPage = () => {
       id: 2,
       title: 'Tips for Safe Travel During Monsoon',
       excerpt: 'Essential safety tips and precautions to take while traveling during the monsoon season.',
-      image: '🌧️',
+      image: Kerala,
       date: 'March 10, 2025',
       readTime: '3 min read',
       category: 'Safety Tips'
@@ -1965,7 +1972,7 @@ const BlogPage = () => {
       id: 3,
       title: 'How to Book the Perfect Cab for Your Trip',
       excerpt: 'A comprehensive guide to choosing the right cab service for different types of journeys.',
-      image: '🚗',
+      image: CabBokking,
       date: 'March 5, 2025',
       readTime: '4 min read',
       category: 'Travel Tips'
@@ -1974,7 +1981,7 @@ const BlogPage = () => {
       id: 4,
       title: 'Corporate Travel Solutions',
       excerpt: 'Streamline your business travel with our corporate cab services and management solutions.',
-      image: '💼',
+      image: corporative,
       date: 'February 28, 2025',
       readTime: '6 min read',
       category: 'Business'
@@ -1983,16 +1990,16 @@ const BlogPage = () => {
       id: 5,
       title: 'Airport Transfer Guide',
       excerpt: 'Everything you need to know about hassle-free airport transfers and timings.',
-      image: '✈️',
+      image: Airport,
       date: 'February 25, 2025',
       readTime: '4 min read',
       category: 'Airport'
     },
     {
       id: 6,
-      title: 'Weekend Getaway Ideas from Mumbai',
-      excerpt: 'Explore amazing weekend destinations near Mumbai that are perfect for a quick escape.',
-      image: '🏖️',
+      title: 'Weekend Getaway Ideas from Rajapalyam',
+      excerpt: 'Explore amazing weekend destinations near Rajapalyam that are perfect for a quick escape.',
+      image: Rajapalyam,
       date: 'February 20, 2025',
       readTime: '7 min read',
       category: 'Weekend Trips'
@@ -2038,9 +2045,15 @@ const BlogPage = () => {
                 key={post.id}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
               >
-                <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-8 text-center">
-                  <div className="text-6xl mb-4">{post.image}</div>
-                </div>
+               {/* <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-8 text-center"> */}
+  <div className="mb-4">
+    <img 
+      src={post.image} 
+      alt="Post" 
+      className="w-38 h-auto object-cover mx-auto rounded-lg" 
+    />
+  </div>
+{/* </div> */}
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
                     <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">
