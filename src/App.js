@@ -1258,7 +1258,307 @@ const ServicesPage = () => {
 };
 
 // Vehicles Page Component
+const BookingFormPage = ({ vehicle, onBack }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    pickupLocation: '',
+    destination: '',
+    date: '',
+    time: '',
+    passengers: 1,
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Format message for WhatsApp
+    const message = `New Booking Request from Bala Travels Website:%0A%0A
+*Vehicle Details:*%0A
+Type: ${vehicle.type}%0A
+Model: ${vehicle.model}%0A
+Price: ${vehicle.priceRange}%0A%0A
+*Customer Details:*%0A
+Name: ${formData.name}%0A
+Phone: ${formData.phone}%0A
+Email: ${formData.email}%0A%0A
+*Trip Details:*%0A
+Pickup: ${formData.pickupLocation}%0A
+Destination: ${formData.destination}%0A
+Date: ${formData.date}%0A
+Time: ${formData.time}%0A
+Passengers: ${formData.passengers}%0A%0A
+*Message:*%0A${formData.message}`;
+
+    // Open WhatsApp with pre-filled message
+    window.open(`https://wa.me/919150508183?text=${message}`, '_blank');
+    
+    // Go back to vehicles page
+    onBack();
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="container mx-auto px-4 max-w-6xl">
+        {/* Header with back button */}
+        <div className="mb-8">
+          <button 
+            onClick={onBack}
+            className="flex items-center text-blue-600 hover:text-blue-800 mb-4 transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Vehicles
+          </button>
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">Book Your Vehicle</h1>
+          <p className="text-lg text-gray-600">Complete your booking details below</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Vehicle Details Section */}
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div 
+              className="relative h-80 bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${vehicle.image})`,
+              }}
+            >
+              <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+              <div className="absolute bottom-6 left-6 right-6 text-white">
+                <h2 className="text-3xl font-bold mb-2">{vehicle.type}</h2>
+                <p className="text-xl text-gray-200">{vehicle.model}</p>
+              </div>
+            </div>
+            
+            <div className="p-6">
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <div className="text-3xl mb-2">👥</div>
+                  <div className="text-sm text-gray-600 font-medium">Capacity</div>
+                  <div className="text-lg font-bold text-gray-800">{vehicle.capacity}</div>
+                </div>
+                <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <div className="text-3xl mb-2">🧳</div>
+                  <div className="text-sm text-gray-600 font-medium">Luggage</div>
+                  <div className="text-lg font-bold text-gray-800">{vehicle.luggage}</div>
+                </div>
+              </div>
+              
+              <div className="mb-6">
+                <h4 className="font-semibold text-gray-800 mb-3 text-lg">Vehicle Features</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {vehicle.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-sm text-gray-700">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white text-center">
+                <div className="text-sm opacity-90">Starting from</div>
+                <div className="text-2xl font-bold">{vehicle.priceRange}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Booking Form Section */}
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6">Booking Details</h3>
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Personal Information */}
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-4">Personal Information</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number *
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="+91 XXXXX XXXXX"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="your.email@example.com"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Trip Information */}
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-4">Trip Information</h4>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Pickup Location *
+                      </label>
+                      <input
+                        type="text"
+                        name="pickupLocation"
+                        value={formData.pickupLocation}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="Enter pickup location"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Destination *
+                      </label>
+                      <input
+                        type="text"
+                        name="destination"
+                        value={formData.destination}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="Enter destination"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Travel Date *
+                      </label>
+                      <input
+                        type="date"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleChange}
+                        required
+                        min={new Date().toISOString().split('T')[0]}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Pickup Time *
+                      </label>
+                      <input
+                        type="time"
+                        name="time"
+                        value={formData.time}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Passengers
+                      </label>
+                      <select
+                        name="passengers"
+                        value={formData.passengers}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      >
+                        {[...Array(parseInt(vehicle.capacity))].map((_, i) => (
+                          <option key={i+1} value={i+1}>{i+1} Passenger{i+1 > 1 ? 's' : ''}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional Information */}
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-4">Additional Information</h4>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Special Requests or Instructions
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={4}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    placeholder="Any special requests, stops, or additional instructions..."
+                  ></textarea>
+                </div>
+              </div>
+              
+              {/* Submit Button */}
+              <div className="pt-6">
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-lg shadow-lg"
+                >
+                  Confirm Booking via WhatsApp
+                </button>
+                <p className="text-sm text-gray-500 text-center mt-3">
+                  You'll be redirected to WhatsApp to complete your booking
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const VehiclesPage = () => {
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  
   const vehicles = [
     {
       type: 'Sedan',
@@ -1316,40 +1616,58 @@ const VehiclesPage = () => {
     }
   ];
 
+  const handleBookNow = (vehicle) => {
+    setSelectedVehicle(vehicle);
+    setShowBookingForm(true);
+  };
+
+  const handleBackToVehicles = () => {
+    setShowBookingForm(false);
+    setSelectedVehicle(null);
+  };
+
+  // If booking form is shown, render the full page form
+  if (showBookingForm && selectedVehicle) {
+    return (
+      <BookingFormPage 
+        vehicle={selectedVehicle} 
+        onBack={handleBackToVehicles} 
+      />
+    );
+  }
+
+  // Otherwise render the vehicles page
   return (
     <div>
-     <div className="bg-white h-64 flex flex-col justify-center items-center">
-  <h1 className="text-4xl font-bold">Our Vehicle Fleet</h1>
-  <p className="text-lg text-center">Choose from our extensive fleet of well-maintained vehicles at Bala Travels.</p>
-</div>
+      <div className="bg-white h-64 flex flex-col justify-center items-center">
+        <h1 className="text-4xl font-bold">Our Vehicle Fleet</h1>
+        <p className="text-lg text-center">Choose from our extensive fleet of well-maintained vehicles at Bala Travels.</p>
+      </div>
+      
       <section className="py-8">
-        
         <div className="container mx-auto px-4">
-          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
             {vehicles.map((vehicle, index) => (
               <div
                 key={index}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
               >
-               <div 
-  className="relative rounded-xl overflow-hidden shadow-lg text-center p-8 h-64 flex flex-col justify-center"
-  style={{
-    backgroundImage: `url(${vehicle.image})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  }}
->
-  <div className="absolute inset-0 bg-black bg-opacity-40"></div> {/* overlay for text readability */}
-
-  <div className="relative z-10">
-    <h3 className="text-2xl font-bold text-white mt-44">
-      {vehicle.type}
-    </h3>
-    <p className="text-gray-200">{vehicle.model}</p>
-  </div>
-</div>
+                <div 
+                  className="relative rounded-xl overflow-hidden shadow-lg text-center p-8 h-64 flex flex-col justify-center"
+                  style={{
+                    backgroundImage: `url(${vehicle.image})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+                  <div className="relative z-10">
+                    <h3 className="text-2xl font-bold text-white mt-44">
+                      {vehicle.type}
+                    </h3>
+                    <p className="text-gray-200">{vehicle.model}</p>
+                  </div>
+                </div>
 
                 <div className="p-6">
                   <div className="flex justify-between mb-4">
@@ -1382,7 +1700,10 @@ const VehiclesPage = () => {
                         {vehicle.priceRange}
                       </div>
                     </div>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    <button 
+                      onClick={() => handleBookNow(vehicle)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                    >
                       Book Now
                     </button>
                   </div>
@@ -1948,6 +2269,153 @@ const ContactPage = () => {
   );
 };
 // Blog Page Component
+
+const TravelBlogHeader = () => {
+  return (
+    <section className="relative py-16 md:py-24 text-white overflow-hidden min-h-[70vh] flex items-center">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0">
+        {/* Responsive image with different sources for mobile and desktop */}
+        <picture>
+          {/* Mobile image (3:4 aspect ratio) */}
+          <source 
+            media="(max-width: 768px)" 
+            srcSet="https://images.unsplash.com/photo-1490650404312-a2175773bbf5?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dGF4aXxlbnwwfHwwfHx8MA%3D%3D" 
+          />
+          {/* Desktop image (16:9 aspect ratio) */}
+          <source 
+            media="(min-width: 769px)" 
+            srcSet="https://images.unsplash.com/photo-1490650404312-a2175773bbf5?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dGF4aXxlbnwwfHwwfHx8MA%3D%3D" 
+          />
+          {/* Fallback image */}
+          <img 
+            src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" 
+            alt="Travel background" 
+            className="w-full h-full object-cover"
+            loading="eager"
+          />
+        </picture>
+        
+        {/* Gradient overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-400/0 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 to-blue-400/0"></div>
+        
+        {/* Animated floating elements */}
+        <div className="absolute top-1/4 left-1/4 w-8 h-8 rounded-full bg-yellow-400 opacity-20 animate-float1"></div>
+        <div className="absolute top-1/3 right-1/4 w-6 h-6 rounded-full bg-white opacity-10 animate-float2"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-10 h-10 rounded-full bg-green-300 opacity-15 animate-float3"></div>
+      </div>
+      
+      {/* Content */}
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-3xl mx-auto text-center">
+          {/* Breadcrumb */}
+          <nav className="flex justify-center mb-6" aria-label="Breadcrumb">
+            <ol className="flex items-center space-x-2 text-sm text-blue-200">
+              <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
+              <li className="flex items-center">
+                <svg className="h-4 w-4 mx-1" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+                <a href="/blog" className="hover:text-white transition-colors">Blog</a>
+              </li>
+            </ol>
+          </nav>
+          
+          {/* Main Title */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+            Travel <span className="text-yellow-400">Blog</span>
+          </h1>
+          
+          {/* Subtitle */}
+          <p className="text-xl md:text-2xl text-blue-100 mb-8 font-light max-w-2xl mx-auto">
+            Travel tips, guides, and insights from our experts
+          </p>
+          
+          {/* Separator */}
+          <div className="w-24 h-1 bg-yellow-400 mx-auto mb-8"></div>
+          
+          {/* Description */}
+          <p className="text-lg text-blue-100 max-w-2xl mx-auto leading-relaxed mb-10">
+            Discover the latest travel trends, destination guides, and expert advice to make your next journey unforgettable.
+          </p>
+          
+          {/* Search Bar */}
+          <div className="max-w-md mx-auto mb-10">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search blog posts..."
+                className="w-full py-3 px-6 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-lg"
+              />
+              <button className="absolute right-2 top-2 bg-yellow-400 text-blue-900 p-2 rounded-full hover:bg-yellow-500 transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          
+          {/* Stats */}
+          <div className="flex flex-wrap justify-center gap-6 mt-12">
+            <div className="text-center px-4 py-2 bg-blue-800 bg-opacity-40 rounded-lg backdrop-blur-sm">
+              <div className="text-2xl font-bold text-yellow-400">150+</div>
+              <div className="text-sm text-blue-200">Articles</div>
+            </div>
+            <div className="text-center px-4 py-2 bg-blue-800 bg-opacity-40 rounded-lg backdrop-blur-sm">
+              <div className="text-2xl font-bold text-yellow-400">25+</div>
+              <div className="text-sm text-blue-200">Destinations</div>
+            </div>
+            <div className="text-center px-4 py-2 bg-blue-800 bg-opacity-40 rounded-lg backdrop-blur-sm">
+              <div className="text-2xl font-bold text-yellow-400">10+</div>
+              <div className="text-sm text-blue-200">Expert Writers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Scrolling Indicator */}
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="animate-bounce">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </div>
+      </div>
+      
+      {/* Add custom animations */}
+      <style jsx>{`
+        @keyframes float1 {
+          0% { transform: translateY(0) translateX(0); }
+          50% { transform: translateY(-20px) translateX(10px); }
+          100% { transform: translateY(0) translateX(0); }
+        }
+        @keyframes float2 {
+          0% { transform: translateY(0) translateX(0); }
+          50% { transform: translateY(15px) translateX(-15px); }
+          100% { transform: translateY(0) translateX(0); }
+        }
+        @keyframes float3 {
+          0% { transform: translateY(0) translateX(0); }
+          50% { transform: translateY(-15px) translateX(-10px); }
+          100% { transform: translateY(0) translateX(0); }
+        }
+        .animate-float1 {
+          animation: float1 8s ease-in-out infinite;
+        }
+        .animate-float2 {
+          animation: float2 10s ease-in-out infinite;
+        }
+        .animate-float3 {
+          animation: float3 12s ease-in-out infinite;
+        }
+      `}</style>
+    </section>
+  );
+};
+
+
+
 const BlogPage = () => {
   const blogPosts = [
     {
@@ -2015,9 +2483,7 @@ const BlogPage = () => {
 
   return (
     <div>
-      <PageHeader
-        title="Travel Blog"
-        subtitle="Travel tips, guides, and insights from our experts"
+      <TravelBlogHeader
       />
       <section className="py-20">
         <div className="container mx-auto px-4">
